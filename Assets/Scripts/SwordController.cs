@@ -24,4 +24,15 @@ public class SwordController : MonoBehaviour
         Debug.Log("놓침");
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Box")
+        {
+            //Box의 방향을 가져와서 때린 방향과 일치하면 상자 삭제, 점수 추가
+            //
+        }
+
+    }
+
+
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2474766700590352180}
   - component: {fileID: 2228528496718682146}
   m_Layer: 8
-  m_Name: BlueBox
+  m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,3 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  materials:
+  - {fileID: 2100000, guid: db0d857b9660f6b4188c74fe64b4e851, type: 2}
+  - {fileID: 2100000, guid: e138e7a8700cd0344aeefc0b83734b5f, type: 2}
