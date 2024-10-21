@@ -30,7 +30,7 @@ public class Box : MonoBehaviour
     private void OnEnable()
     {
         SetBoxInfo();
-         
+        Debug.Log($"Box : {boxDir}");
     }
 
     private void Update()
@@ -53,9 +53,9 @@ public class Box : MonoBehaviour
     }
      
 
-    public void DestroyBox()
+    public void DestroyBox(Vector3 hitPoint)
     {
-        ParticleSystem destroyEffect = Instantiate(this.destroyEffect, transform.position, transform.rotation);
+        ParticleSystem destroyEffect = Instantiate(this.destroyEffect, hitPoint, transform.rotation);
  
         destroyEffect.Play();
         Destroy(gameObject);

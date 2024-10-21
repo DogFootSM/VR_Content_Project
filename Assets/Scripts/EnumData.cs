@@ -6,3 +6,4 @@ using UnityEngine;
 [Serializable]
 public enum BoxDir { Left, Right, Up, Down, SIZE }
 public enum BoxColor { Red, Blue, SIZE }
+public enum GameState {Ready, Start, End, SIZE}
