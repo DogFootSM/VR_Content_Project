@@ -39,6 +39,7 @@ public class CreateCube : MonoBehaviour
         int createCount = 0;
 
         //게임이 종료되면 코루틴 중지하면 될듯
+        //게임이 시작 상태일 때에만 반복문 실행
         while (true)
         {
             createCount = Random.Range(1, 3);
@@ -86,7 +87,7 @@ public class CreateCube : MonoBehaviour
                             boxList[i].BoxDir = (BoxDir)Random.Range(0, (int)BoxDir.SIZE); 
                             instance[i].transform.position = new Vector3(spawnPos.x + xPos, spawnPos.y, spawnPos.z);
                             
-                        } 
+                        }
                     }
 
                 }
@@ -102,6 +103,7 @@ public class CreateCube : MonoBehaviour
                         instance[i].transform.position = new Vector3(spawnPos.x + xPos, spawnPos.y + yPos, spawnPos.z);
                         yPos += 0.5f;
                     }
+
                 }
             }
             else
@@ -110,7 +112,7 @@ public class CreateCube : MonoBehaviour
                 instance[0].transform.position = new Vector3(spawnPos.x + xPos, spawnPos.y, spawnPos.z);
                 boxList[0].BoxDir = (BoxDir)Random.Range(0, (int)BoxDir.SIZE);
             }
- 
+            
             yield return waitTime;
             
         }

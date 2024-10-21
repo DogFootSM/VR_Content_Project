@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,6 +8,8 @@ public class Box : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private Material[] materials;
+    [SerializeField] private ParticleSystem destroyEffect;
+    [SerializeField] private GameObject dirObject;
 
     private MeshRenderer MeshRenderer;
 
@@ -17,20 +20,23 @@ public class Box : MonoBehaviour
     public BoxColor curBoxColor { get { return boxColor; } }
 
     private int colorIndex;
-
+ 
     private void Awake()
     {
-        MeshRenderer = GetComponent<MeshRenderer>(); 
+        MeshRenderer = GetComponent<MeshRenderer>();  
     }
- 
+     
+
     private void OnEnable()
     {
-        SetBoxInfo(); 
+        SetBoxInfo();
+         
     }
 
     private void Update()
     {
         transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward);
+        SetDirObjectPos();
     }
 
     private void SetBoxInfo()
@@ -43,15 +49,50 @@ public class Box : MonoBehaviour
         MeshRenderer.material = materials[colorIndex];
 
         //현재 박스 Color
-        boxColor = (BoxColor)colorIndex;
-         
+        boxColor = (BoxColor)colorIndex; 
     }
      
 
-    public void SetDirImage()
+    public void DestroyBox()
+    {
+        ParticleSystem destroyEffect = Instantiate(this.destroyEffect, transform.position, transform.rotation);
+ 
+        destroyEffect.Play();
+        Destroy(gameObject);
+    }
+
+
+    public void SetDirObjectPos()
     {
         //방향에 맞게 위치 변경
+        switch (boxDir)
+        {
+            case BoxDir.Up:
+                dirObject.transform.localPosition = new Vector3(0, 0.3f, 0.5f);
+                break;
+
+            case BoxDir.Down:
+                dirObject.transform.localPosition = new Vector3(0, -0.3f, 0.5f);
+                break;
+
+            case BoxDir.Left:
+                dirObject.transform.rotation = Quaternion.Euler(0, 0, 90);
+                dirObject.transform.localPosition = new Vector3(0.3f, 0f, 0.5f);
+                break;
+
+            case BoxDir.Right: 
+                dirObject.transform.rotation = Quaternion.Euler(0, 0, 90);
+                dirObject.transform.localPosition = new Vector3(-0.3f, 0f, 0.5f);
+                break; 
+        } 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+ 
+        //끝 지짐과 닿았을 때 박스 파괴
+    }
+
 
 
 }
