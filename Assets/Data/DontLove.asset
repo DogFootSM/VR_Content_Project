@@ -15,3 +15,4 @@ MonoBehaviour:
   coverImage: {fileID: 21300000, guid: 8d74336aecd65a440b95e7234ded670e, type: 3}
   musicTitle: "\uC0AC\uB791\uD558\uC9C0 \uC54A\uC740 \uAC83\uCC98\uB7FC"
   audioClip: {fileID: 8300000, guid: 15b0c55445c1b354a949d6b976c37893, type: 3}
+  highScore: 0

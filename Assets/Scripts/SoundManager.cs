@@ -102,7 +102,8 @@ public class SoundManager : MonoBehaviour
         float musicTimer = 3f;
         WaitForSeconds wait = new WaitForSeconds(musicTimer);
 
-        yield return wait; 
+        yield return wait;
+ 
         bgmSource.Play(); 
 
     }

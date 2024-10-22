@@ -15,3 +15,4 @@ MonoBehaviour:
   coverImage: {fileID: 21300000, guid: 89d975b5af9bcf04e90121619059cbce, type: 3}
   musicTitle: SuperNova
   audioClip: {fileID: 8300000, guid: 11ffcf89bb9db2941b526ea6977e6e45, type: 3}
+  highScore: 0

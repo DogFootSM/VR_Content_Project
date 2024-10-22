@@ -15,3 +15,4 @@ MonoBehaviour:
   coverImage: {fileID: 21300000, guid: 01195d2ee9bbd6e47a0295e69b48fbe8, type: 3}
   musicTitle: Forever Love
   audioClip: {fileID: 8300000, guid: 2cbbf95ef84886640bbc8ae562cb9a30, type: 3}
+  highScore: 0

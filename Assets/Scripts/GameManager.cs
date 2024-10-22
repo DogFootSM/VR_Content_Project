@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-     
     public static GameManager Instance;
     public GameState curState = GameState.Ready;
 
@@ -19,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     private MusicData musicData;
     private float elapsedTime = 0f;
+
+    private float highScore;
 
     private void Awake()
     {
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
         
         if(curState == GameState.Start)
         {
+            HighScoreCompare();
+
             elapsedTime += Time.deltaTime;
              
             //노래가 종료되고 3초 뒤 게임 종료 상태 변경
@@ -49,7 +52,7 @@ public class GameManager : MonoBehaviour
             } 
         } 
 
-        HighScoreCompare();
+        
 
     }
 
@@ -58,7 +61,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void HighScoreCompare()
     {
-        if(score > musicData.highScore)
+        if(score > highScore)
         {
             musicData.highScore = score; 
         }
@@ -90,7 +93,10 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.SetMusicInfo(music); 
         SoundManager.Instance.SetAudioClip(music.audioClip);
-        musicData = music;  
+        musicData = music;
+        highScore = music.highScore;
     }
-  
+   
+
+
 }

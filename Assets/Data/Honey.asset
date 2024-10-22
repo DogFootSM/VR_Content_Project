@@ -15,3 +15,4 @@ MonoBehaviour:
   coverImage: {fileID: 21300000, guid: 2ad1747669e02f24c997ca812bde7d97, type: 3}
   musicTitle: Honey
   audioClip: {fileID: 8300000, guid: 8d3684d8dbfae764d8520bfd6b104a2c, type: 3}
+  highScore: 0
