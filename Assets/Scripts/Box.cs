@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 
@@ -29,14 +30,20 @@ public class Box : MonoBehaviour
 
     private void OnEnable()
     {
-        SetBoxInfo();
-        Debug.Log($"Box : {boxDir}");
+        SetBoxInfo(); 
     }
 
     private void Update()
     {
         transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward);
         SetDirObjectPos();
+
+        //게임 중도 포기 시 생성되어 있는 Box 삭제
+        if(GameManager.Instance.curState == GameState.End)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     private void SetBoxInfo()
@@ -53,10 +60,15 @@ public class Box : MonoBehaviour
     }
      
 
+    /// <summary>
+    /// 박스 삭제 후 동작
+    /// </summary>
+    /// <param name="hitPoint">박스 피격 위치</param>
     public void DestroyBox(Vector3 hitPoint)
     {
         ParticleSystem destroyEffect = Instantiate(this.destroyEffect, hitPoint, transform.rotation);
- 
+        
+        //박스 삭제 파티클 재생
         destroyEffect.Play();
         Destroy(gameObject);
     }
@@ -88,9 +100,11 @@ public class Box : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
- 
-        //끝 지짐과 닿았을 때 박스 파괴
+    { 
+        if(other.gameObject.CompareTag("EndLine"))
+        { 
+            Destroy(gameObject);
+        } 
     }
 
 

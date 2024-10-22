@@ -11,41 +11,72 @@ public class CreateCube : MonoBehaviour
     [SerializeField] private float createTimer;
 
     private bool boxColorCheck = false;
+    private float elapsedTime = 0f;
 
     private Coroutine boxCreateCo;
-
     private Vector3 spawnPos;
+    
 
     private void Awake()
     {
         spawnPos = transform.position;
     }
-
-    void Start()
-    {
-        boxCreateCo = StartCoroutine(CreateCoroutine());
-    }
-
+ 
     private void Update()
     {
-        //게임 종료 && boxCreateCo != null > stopcoroutine
-    }   
+
+        if(GameManager.Instance.curState == GameState.Start)
+        {
+            //노래 재생 시간
+            elapsedTime += Time.deltaTime;
+
+            //박스 생성 코루틴 시작
+            if (boxCreateCo == null)
+            { 
+                boxCreateCo = StartCoroutine(CreateCoroutine());
+            } 
+        } 
+        else if(GameManager.Instance.curState == GameState.End)
+        {
+            elapsedTime = 0f;
+
+            //박스 생성 코루틴 종료
+            if(boxCreateCo != null)
+            {
+                StopCoroutine(boxCreateCo);
+                boxCreateCo = null;
+            } 
+        }
+        
+    }
+
+
 
     private IEnumerator CreateCoroutine()
     {
+        int createCount = 0;
+
+        float startTimer = 3f; 
+        //재생할 노래의 총 길이
+        float endTime = SoundManager.Instance.GetPlayTime();
+
+        WaitForSeconds startWait = new WaitForSeconds(startTimer);
         WaitForSeconds waitTime = new WaitForSeconds(createTimer);
         GameObject[] instance;
         Box[] boxList;
-        int createCount = 0;
+         
+        
 
-        //게임이 종료되면 코루틴 중지하면 될듯
-        //게임이 시작 상태일 때에만 반복문 실행
-        while (true)
+        yield return startWait;
+
+        //노래 끝나기 5초 전에 큐브 생산 종료
+        while (elapsedTime < endTime - 5f)
         {
+            //한번 생성할 박스 개수
             createCount = Random.Range(1, 3);
             instance = new GameObject[createCount];
             boxList = new Box[createCount];
-
+ 
             for (int i = 0; i <createCount; i++)
             { 
                 //생성될 박스 회전값만 스폰 위치로 반영
@@ -53,7 +84,7 @@ public class CreateCube : MonoBehaviour
                 boxList[i] = instance[i].GetComponent<Box>();
             }
             
-             
+            //박스 2개 이상 생성 
             if (createCount > 1)
             { 
                 for(int i = 1; i < boxList.Length; i++)
@@ -94,18 +125,19 @@ public class CreateCube : MonoBehaviour
                 //생성된 상자의 색깔이 같은 경우
                 else
                 {
-                    float yPos = 0.5f;
+                    float yPos = 0.8f;
 
                     for (int i = 1; i < createCount; i++)
                     {
                         //이전 박스 위에 생성
                         boxList[i].BoxDir = boxList[0].BoxDir;
                         instance[i].transform.position = new Vector3(spawnPos.x + xPos, spawnPos.y + yPos, spawnPos.z);
-                        yPos += 0.5f;
+                        yPos += 0.8f;
                     }
 
                 }
             }
+            //박스 1개 생성
             else
             {
                 float xPos = Random.Range(-2, 2);
@@ -115,7 +147,7 @@ public class CreateCube : MonoBehaviour
             
             yield return waitTime;
             
-        }
+        } 
     }
 
 

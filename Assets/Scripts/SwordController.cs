@@ -6,7 +6,7 @@ public class SwordController : MonoBehaviour
 {
 
     [SerializeField] private BoxColor swordColor;
-    [SerializeField] private Transform test;
+    [SerializeField] private Transform hitPivot;
 
     //LightSaber 보관대 > Socket Interactor
     private Vector3 blueSwordPos = new Vector3(-1.7f, 0.3f, -1.3f);
@@ -27,7 +27,7 @@ public class SwordController : MonoBehaviour
                 boxDir = other.GetComponent<Box>().BoxDir;
 
                 //타격 위치를 받아와서 비교  
-                Vector3 hitPoint = transform.position - other.transform.position;
+                Vector3 hitPoint = hitPivot.transform.position - other.transform.position;
 
                 if (hitPoint.y > hitPoint.x)
                 {
@@ -95,8 +95,12 @@ public class SwordController : MonoBehaviour
 
     public void ScoreMinusUpdate()
     {
-        GameManager.Instance.Score -= 10;
-        UIManager.Instance.OnScoreUI?.Invoke();
+        if(GameManager.Instance.Score > 0)
+        {
+            GameManager.Instance.Score -= 10;
+            UIManager.Instance.OnScoreUI?.Invoke();
+        }
+
     }
 
     public void ScorePlusUpdate()
